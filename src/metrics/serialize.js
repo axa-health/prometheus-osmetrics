@@ -48,6 +48,6 @@ module.exports = function (metrics) {
 
     const separator = index === 0 ? '' : '\n'
 
-    return `${accum}${separator}${comments}${metric.name}${labels} ${metric.value}${timestamp}`
+    return `${accum}${separator}${comments}${metric.name}${labels} ${metric.value}`
   }, '')
 }

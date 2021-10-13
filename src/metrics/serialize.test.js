@@ -11,12 +11,6 @@ describe('serialize', () => {
     ).toEqual('foo{bar="baz"} 123')
   })
 
-  it('should serialize a single metric with timestamp', () => {
-    expect(serialize([{ name: 'foo', value: 123, timestamp: 12345 }])).toEqual(
-      'foo 123 12345'
-    )
-  })
-
   it('should serialize a single metric with type', () => {
     expect(serialize([{ name: 'foo', value: 123, type: 'gauge' }]))
       .toEqual(`# TYPE foo gauge
@@ -60,7 +54,6 @@ bar 456`)
           name: 'foo',
           value: 123,
           labels: { foo: 'bar', bar: 'baz' },
-          timestamp: 1234567,
           type: 'gauge',
           help: 'foo help text',
           comment: 'this \n is a comment'
@@ -69,7 +62,6 @@ bar 456`)
           name: 'bar',
           value: 456,
           labels: { hello: 'world' },
-          timestamp: 12345678,
           type: 'counter',
           help: 'bar help text',
           comment: 'this \n is a large\ncomment \nwith many\nlines'
@@ -79,7 +71,7 @@ bar 456`)
 # TYPE foo gauge
 # this
 # is a comment
-foo{foo="bar", bar="baz"} 123 1234567
+foo{foo="bar", bar="baz"} 123
 # HELP bar bar help text
 # TYPE bar counter
 # this
@@ -87,7 +79,7 @@ foo{foo="bar", bar="baz"} 123 1234567
 # comment
 # with many
 # lines
-bar{hello="world"} 456 12345678`)
+bar{hello="world"} 456`)
   })
 
   it('should de-duplicate comments', () => {
@@ -97,7 +89,6 @@ bar{hello="world"} 456 12345678`)
           name: 'foo',
           value: 123,
           labels: { foo: 'bar', bar: 'baz' },
-          timestamp: 1234567,
           type: 'gauge',
           help: 'foo help text',
           comment: 'this \n is a comment'
@@ -106,7 +97,6 @@ bar{hello="world"} 456 12345678`)
           name: 'foo',
           value: 123,
           labels: { foo: 'bar', bar: 'baz2' },
-          timestamp: 1234567,
           type: 'gauge',
           help: 'foo help text',
           comment: 'this \n is a comment'
@@ -116,7 +106,7 @@ bar{hello="world"} 456 12345678`)
 # TYPE foo gauge
 # this
 # is a comment
-foo{foo="bar", bar="baz"} 123 1234567
-foo{foo="bar", bar="baz2"} 123 1234567`)
+foo{foo="bar", bar="baz"} 123
+foo{foo="bar", bar="baz2"} 123`)
   })
 })
