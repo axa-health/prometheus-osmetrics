@@ -4,7 +4,6 @@ const https = require('https')
 /**
  * @typedef {Object} Settings
  * @property {string} osApi
- * @property {string} osMetricApi
  * @property {string} accessToken
  * @property {?import('https').Agent} agent
  * @property {?Array<string>} defaultNamespace
@@ -26,11 +25,6 @@ module.exports = async function collectSettings (env, logger) {
     } else {
       throw new Error('Please set the OS_API env variable!')
     }
-  }
-
-  const osMetricApi = env.OS_METRIC_API
-  if (!osMetricApi) {
-    throw new Error('Please set the OS_METRIC_API env variable!')
   }
 
   const accessToken = env.OS_ACCESS_TOKEN_FILE
@@ -55,5 +49,5 @@ module.exports = async function collectSettings (env, logger) {
     logger.info('Using default namespace %j', defaultNamespace)
   }
 
-  return { osApi, osMetricApi, accessToken, agent, defaultNamespace }
+  return { osApi, accessToken, agent, defaultNamespace }
 }
