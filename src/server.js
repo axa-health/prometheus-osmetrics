@@ -7,7 +7,6 @@ const serializeMetrics = require('./metrics/serialize')
  * @typedef {Object} Options
  * @property {Object=} fastifyOptions
  * @property {number=} concurrency
- * @property {string} osMetricApi
  * @property {string} osApi
  * @property {string} accessToken
  * @property {?import('https').Agent} agent
@@ -21,7 +20,6 @@ const serializeMetrics = require('./metrics/serialize')
 module.exports = function createServer ({
   fastifyOptions = {},
   concurrency = 10,
-  osMetricApi,
   osApi,
   accessToken,
   agent,
@@ -76,7 +74,6 @@ module.exports = function createServer ({
           await collectMetrics({
             namespace,
             concurrency,
-            osMetricApi,
             osApi,
             accessToken,
             agent,

@@ -42,10 +42,18 @@ const parseCpu = require('./parse-cpu')
  */
 
 /**
+ * @param {(string)} date
+ * @returns number
+ */
+function dateToTimeStamp(date) {
+  return new Date(date).getTime() / 1000;
+}
+
+/**
  * @param {FetchMetricOptions} options
  * @returns {Promise<Array<import('./serialize').PrometheusMetric>>}
  */
-async function fetchPodMemoryAndCpuUsage({
+async function  fetchPodMemoryAndCpuUsage({
  pod,
  accessToken,
  osApi,
@@ -75,7 +83,7 @@ async function fetchPodMemoryAndCpuUsage({
   }
 
   /**
-   * @type {{ kind: string, containers: Array<ContainerMetrics>, timestamp: number }}
+   * @type {{ kind: string, containers: Array<ContainerMetrics>, timestamp: string }}
    */
   const body = await response.json()
 
@@ -103,7 +111,7 @@ async function fetchPodMemoryAndCpuUsage({
   const metrics = [];
 
   const containers = body.containers;
-  const timestamp = body.timestamp;
+  const timestamp = dateToTimeStamp(body.timestamp);
 
   containers.forEach((container) => {
     const parsedMemoryUsage = parseMemory(container.usage.memory);

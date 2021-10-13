@@ -26,9 +26,8 @@ const start = async () => {
   })
 
   server.log.info(
-    'Using OS API %s, OS Metric API %s',
+    'Using OS API %s',
     options.osApi,
-    options.osMetricApi
   )
 
   try {
