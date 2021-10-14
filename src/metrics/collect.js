@@ -77,9 +77,8 @@ async function  fetchPodMemoryAndCpuUsage({
     response.status > 299 ||
     response.status === 204
   ) {
-    throw new Error(
-      `OS API returned status code ${response.status} for ${response.url}`
-    )
+    logger.warn(`OS API returned status code ${response.status} for ${response.url}`);
+    return [];
   }
 
   /**
